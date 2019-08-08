@@ -13,19 +13,23 @@ module.exports = {
     historyApiFallback: true,
     inline: true
   },
-  rules: [
-    {
-      test: /(\.jsx|\.js)$/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: [
-            "env", "react"
-          ]
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
         }
       },
-      exclude: /node_modules/
-    }
-  ]
+      {
+        test: /\.css$/,
+        use: [
+          {loader: "style-loader"},
+          {loader: "css-loader"},
+        ]
+      }
+    ]
+  }
 }
 
