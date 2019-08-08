@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin  } = require('clean-webpack-plugin')
+
 module.exports = {
   optimization: {
     minimizer: [
@@ -22,7 +24,7 @@ module.exports = {
   entry: './app/main.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: "bundle.js"
+    filename: "bundle-[hash].js"
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
@@ -63,6 +65,7 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new CleanWebpackPlugin(),
     require('autoprefixer')
   ]
 
