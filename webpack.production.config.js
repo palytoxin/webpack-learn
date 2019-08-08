@@ -1,7 +1,22 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          compress: false,
+          ecma: 6,
+          mangle: true
+        },
+        sourceMap: true
+      })
+    ]
+  },
   mode: 'production',
   devtool: 'eval-source-map',
   entry: './app/main.js',
@@ -42,11 +57,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.BannerPlugin('yanxd'),
+    new webpack.BannerPlugin('yanxd production'),
     new HtmlWebpackPlugin({
       template: __dirname + "/app/index.tmpl.html"
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     require('autoprefixer')
   ]
 
